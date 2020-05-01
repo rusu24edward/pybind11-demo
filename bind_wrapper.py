@@ -3,17 +3,7 @@
 from build.simple_corridor import SimpleCorridor
 
 from gym.spaces import Discrete
-from gym.core import Wrapper
-
-class CppWrapper(Wrapper):
-    def __init__(self, env, action_space, observation_space):
-        self.env = env
-        self.action_space = action_space
-        self.observation_space = observation_space
-    
-    def step(self, action):
-        obs, reward, done = self.env.step(action)
-        return obs, reward, done, {}
+from cpp_wrapper import CppWrapper
     
 
 env = SimpleCorridor({'corridor_length': 5})
