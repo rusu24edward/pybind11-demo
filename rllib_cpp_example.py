@@ -2,8 +2,6 @@
 
 This example shows:
   - using a custom environment
-  - using a custom model
-  - using Tune for grid search
 
 You can visualize experiment results in ~/ray_results using TensorBoard.
 """
@@ -32,11 +30,11 @@ if __name__ == "__main__":
     tune.run(
         "PPO",
         stop={
-            "timesteps_total": 10000,
+            "timesteps_total": 100000,
         },
         config={
             "env": "SimpleCorridor-v0",  # or "corridor" if registered above
-            "num_workers": 1,  # parallelism
+            "num_workers": 4,  # parallelism
             "env_config": {
                 "corridor_length": 5,
             },

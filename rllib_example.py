@@ -12,7 +12,6 @@ import numpy as np
 import ray
 from ray import tune
 
-
 class SimpleCorridor(gym.Env):
     """Example of a custom env in which you have to walk down a corridor.
 
@@ -46,11 +45,11 @@ if __name__ == "__main__":
     tune.run(
         "PPO",
         stop={
-            "timesteps_total": 10000,
+            "timesteps_total": 100000,
         },
         config={
             "env": SimpleCorridor,  # or "corridor" if registered above
-            "num_workers": 1,  # parallelism
+            "num_workers": 4,  # parallelism
             "env_config": {
                 "corridor_length": 5,
             },
