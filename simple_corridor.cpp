@@ -6,8 +6,8 @@
 #include <string>
 using namespace std;
 
-rl::SimpleCorridor::SimpleCorridor(int corridor_length) {
-    this->end_pos = corridor_length;
+rl::SimpleCorridor::SimpleCorridor(map<string, int> config) {
+    this->end_pos = config["corridor_length"];
     this->cur_pos = 0;
     // this->action_space = 
     // this->observation_space = 

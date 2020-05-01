@@ -15,7 +15,7 @@ namespace rl {
             // int action_space;
             // int observation_space;
         public:
-            SimpleCorridor(int);
+            SimpleCorridor(map<string, int>);
             int reset();
             tuple<int, int, bool> step(int action);
     };
@@ -28,7 +28,7 @@ PYBIND11_MODULE(simple_corridor, m) {
 
     // Binding to SimpleCorridor
     py::class_<rl::SimpleCorridor>(m, "SimpleCorridor")
-        .def(py::init<int>())
+        .def(py::init<map<string, int>>())
         .def("reset", &rl::SimpleCorridor::reset)
         .def("step", &rl::SimpleCorridor::step);
 }
