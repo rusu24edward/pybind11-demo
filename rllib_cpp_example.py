@@ -8,15 +8,28 @@ This example shows:
 You can visualize experiment results in ~/ray_results using TensorBoard.
 """
 
-import numpy as np
 import gym
-# from gym.spaces import Discrete, Box
-
+from gym.core import Wrapper
+from gym.spaces import Discrete
+import numpy as np
 import ray
 from ray import tune
-
+from ray.tune.registry import register_env
 
 from build.simple_corridor import SimpleCorridor
+
+class CppWrapper(Wrapper):
+    def __init__(self, env, action_space, observation_space):
+        self.env = env
+        self.action_space = action_space
+        self.observation_space = observation_space
+
+def env_creator(env_config):
+    env = SimpleCorridor(env_config)
+    env = CppWrapper(env, Discrete(2), Discrete(5))
+    return env  # return an env instance
+
+register_env("SimpleCorridor-v0", env_creator)
 
 if __name__ == "__main__":
     # Can also register the env creator function explicitly with:
@@ -28,7 +41,7 @@ if __name__ == "__main__":
             "timesteps_total": 10000,
         },
         config={
-            "env": SimpleCorridor,  # or "corridor" if registered above
+            "env": "SimpleCorridor-v0",  # or "corridor" if registered above
             "num_workers": 1,  # parallelism
             "env_config": {
                 "corridor_length": 5,
