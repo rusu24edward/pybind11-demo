@@ -10,7 +10,7 @@ You can visualize experiment results in ~/ray_results using TensorBoard.
 
 import gym
 from gym.core import Wrapper
-from gym.spaces import Discrete
+from gym.spaces import Discrete, Box
 import numpy as np
 import ray
 from ray import tune
@@ -26,11 +26,17 @@ class CppWrapper(Wrapper):
     
     def step(self, action):
         obs, reward, done = self.env.step(action)
-        return obs, reward, done, {}
+        return [obs], reward, done, {}
+    
+    def reset(self):
+        return [self.env.reset()]
+    
+    def close(self):
+        pass
 
 def env_creator(env_config):
     env = SimpleCorridor(env_config)
-    env = CppWrapper(env, Discrete(2), Discrete(5))
+    env = CppWrapper(env, Discrete(2), Box(0.0, 5, shape=(1, ), dtype=np.float32))
     return env  # return an env instance
 
 register_env("SimpleCorridor-v0", env_creator)
