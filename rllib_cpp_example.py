@@ -23,6 +23,10 @@ class CppWrapper(Wrapper):
         self.env = env
         self.action_space = action_space
         self.observation_space = observation_space
+    
+    def step(self, action):
+        obs, reward, done = self.env.step(action)
+        return obs, reward, done, {}
 
 def env_creator(env_config):
     env = SimpleCorridor(env_config)

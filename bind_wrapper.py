@@ -11,12 +11,16 @@ class CppWrapper(Wrapper):
         self.action_space = action_space
         self.observation_space = observation_space
     
+    def step(self, action):
+        obs, reward, done = self.env.step(action)
+        return obs, reward, done, {}
+    
 
 env = SimpleCorridor({'corridor_length': 5})
 
 env = CppWrapper(env, Discrete(2), Discrete(5))
 
 obs = env.reset()
-obs, reward, done = env.step(1)
+obs, reward, done, info = env.step(1)
 
 print(reward)

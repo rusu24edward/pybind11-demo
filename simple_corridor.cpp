@@ -9,8 +9,6 @@ using namespace std;
 rl::SimpleCorridor::SimpleCorridor(map<string, int> config) {
     this->end_pos = config["corridor_length"];
     this->cur_pos = 0;
-    // this->action_space_descriptor = "Discrete(2)";
-    // this->observation_space_descriptor = "Discrete(self.end_pos)";
 }
 
 int rl::SimpleCorridor::reset() {
